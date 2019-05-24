@@ -3,9 +3,9 @@ import numpy as np
 
 ## tags, BIO
 tag2label = {"O": 0,
-             "B-PER": 1, "I-PER": 2,
-             "B-LOC": 3, "I-LOC": 4,
-             "B-ORG": 5, "I-ORG": 6
+             "B": 1,
+             "M": 2,
+             "E": 3
              }
 
 
@@ -20,7 +20,8 @@ def read_corpus(corpus_path):
         lines = fr.readlines()
     sent_, tag_ = [], []
     for line in lines:
-        if line != '\n':
+        if line.strip() != '':
+            #print(line)
             [char, label] = line.strip().split()
             sent_.append(char)
             tag_.append(label)
@@ -33,7 +34,6 @@ def read_corpus(corpus_path):
 
 def vocab_build(vocab_path, corpus_path, min_count):
     """
-
     :param vocab_path:
     :param corpus_path:
     :param min_count:
@@ -72,7 +72,6 @@ def vocab_build(vocab_path, corpus_path, min_count):
 
 def sentence2id(sent, word2id):
     """
-
     :param sent:
     :param word2id:
     :return:
@@ -91,7 +90,6 @@ def sentence2id(sent, word2id):
 
 def read_dictionary(vocab_path):
     """
-
     :param vocab_path:
     :return:
     """
@@ -104,7 +102,6 @@ def read_dictionary(vocab_path):
 
 def random_embedding(vocab, embedding_dim):
     """
-
     :param vocab:
     :param embedding_dim:
     :return:
@@ -116,7 +113,6 @@ def random_embedding(vocab, embedding_dim):
 
 def pad_sequences(sequences, pad_mark=0):
     """
-
     :param sequences:
     :param pad_mark:
     :return:
@@ -133,7 +129,6 @@ def pad_sequences(sequences, pad_mark=0):
 
 def batch_yield(data, batch_size, vocab, tag2label, shuffle=False):
     """
-
     :param data:
     :param batch_size:
     :param vocab:
@@ -159,3 +154,6 @@ def batch_yield(data, batch_size, vocab, tag2label, shuffle=False):
     if len(seqs) != 0:
         yield seqs, labels
 
+
+if __name__ == "__main__":
+    vocab_build("./data_path/word2id.pkl", "./data_path/train_data", 5)
