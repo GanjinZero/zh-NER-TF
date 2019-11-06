@@ -19,13 +19,15 @@ def read_corpus(corpus_path):
     with open(corpus_path, encoding='utf-8') as fr:
         lines = fr.readlines()
     sent_, tag_ = [], []
+    cnt = 0
     for line in lines:
+        cnt += 1
         if line.strip() != '':
-            #print(line)
-            [char, label] = line.strip().split()
-            sent_.append(char)
-            tag_.append(label)
-        else:
+            if len(line.strip().split()) == 2:
+                [char, label] = line.strip().split()
+                sent_.append(char)
+                tag_.append(label)
+        elif sent_ != [] and tag_ != []: # data.append((sent_, tag_)) sent_, tag_ = [], []
             data.append((sent_, tag_))
             sent_, tag_ = [], []
 
